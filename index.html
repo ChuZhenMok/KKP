@@ -1,213 +1,413 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="ms">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kajian Kepuasan Pelanggan</title>
+    <title>Kajian Kepuasan Pelanggan | Jabatan Dietetik</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <style>
-      body { background-color: #f8f9fa; padding-bottom: 50px; }
-      .container { max-width: 800px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 20px; }
-      .section-header { background-color: #0d6efd; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
-      .form-label { font-weight: 600; color: #333; }
-      .star-rating { direction: rtl; display: inline-block; }
-      .star-rating input { display: none; }
-      .star-rating label { font-size: 2rem; color: #ddd; cursor: pointer; }
-      .star-rating input:checked ~ label { color: #ffc107; }
-      .star-rating label:hover, .star-rating label:hover ~ label { color: #ffc107; }
+        :root {
+            --primary-color: #009688; /* Medical Teal */
+            --secondary-color: #80cbc4;
+            --bg-color: #f0f4f8;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: #444;
+            padding-bottom: 60px;
+        }
+
+        /* Header Styling */
+        .header-section {
+            background: linear-gradient(135deg, #009688 0%, #4db6ac 100%);
+            color: white;
+            padding: 50px 20px 80px 20px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,150,136,0.3);
+            margin-bottom: -50px; /* Overlap effect */
+        }
+
+        .main-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0f2f1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 150, 136, 0.25);
+        }
+
+        /* Custom Radio Buttons for better touch targets */
+        .btn-check:checked + .btn-outline-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-custom {
+            color: #666;
+            border-color: #ddd;
+            border-radius: 50px;
+            padding: 8px 20px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .btn-outline-custom:hover {
+            background-color: #e0f2f1;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Star Rating */
+        .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            font-size: 2.5rem;
+        }
+        .star-rating input { display: none; }
+        .star-rating label { color: #ddd; cursor: pointer; transition: color 0.2s; padding: 0 5px; }
+        .star-rating input:checked ~ label { color: #ffc107; }
+        .star-rating label:hover, .star-rating label:hover ~ label { color: #ffd54f; }
+
+        /* Submit Button */
+        .btn-submit {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #00796b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,121,107,0.4);
+        }
+        .btn-submit:disabled {
+            background-color: #b2dfdb;
+            transform: none;
+        }
+
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
+    <div class="header-section">
+        <i class="fas fa-utensils fa-3x mb-3"></i>
+        <h2 class="fw-bold">Kajian Kepuasan Pelanggan</h2>
+        <p class="mb-0 opacity-75">Jabatan Dietetik PPUM</p>
+    </div>
 
     <div class="container">
-      <div class="text-center mb-4">
-        <h2>Kajian Kepuasan Pelanggan</h2>
-        <p class="text-muted">Jabatan Dietetik PPUM</p>
-      </div>
+        <form id="surveyForm" onsubmit="handleFormSubmit(this)">
+            
+            <div class="main-card mt-4">
+                <h5 class="section-title"><i class="fas fa-user-injured"></i> Maklumat Pesakit</h5>
 
-      <form id="surveyForm" onsubmit="handleFormSubmit(this)">
+                <div class="mb-4">
+                    <label class="form-label">Nama Penemu Ramah</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="fas fa-user-nurse text-muted"></i></span>
+                        <select class="form-select" name="interviewerName" required>
+                            <option value="" disabled selected>Sila Pilih...</option>
+                            <option>Rafiah binti Sahir (Sajian)</option>
+                            <option>Nur Syazwani bunti Maznor Arash (Sajian)</option>
+                            <option>Jamaliah Binti Omar (UBME)</option>
+                            <option>Asmah @ Asnah Binti Ayub (UBME)</option>
+                            <option>Salnizah Binti Ahmad (UBME)</option>
+                            <option>Siti Aishah Binti Kassim (UBME)</option>
+                            <option>Suna liza Binti Ahmad (UBME)</option>
+                            <option>Suzana Binti Ramli (UBME)</option>
+                            <option>Maslinawati Binti Ismal (Unit Sajian)</option>
+                            <option>Rozizi Binti Abd Rahim (UBME)</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombor Pendaftaran (RN)</label>
+                        <input type="text" class="form-control" name="rnNumber" placeholder="Contoh: 1234567" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tarikh</label>
+                        <input type="date" class="form-control" name="date">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Wad</label>
+                        <input type="text" class="form-control" name="ward" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Katil</label>
+                        <input type="text" class="form-control" name="bed" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Jangka masa tinggal di wad</label>
+                    <input type="radio" class="btn-check" name="duration" id="d1" value="Kurang daripada 9 hari" required>
+                    <label class="btn btn-outline-custom" for="d1"> < 9 Hari</label>
+                    
+                    <input type="radio" class="btn-check" name="duration" id="d2" value="9 hari - 1 bulan">
+                    <label class="btn btn-outline-custom" for="d2">9 Hari - 1 Bulan</label>
+                    
+                    <input type="radio" class="btn-check" name="duration" id="d3" value="Lebih daripada 1 bulan">
+                    <label class="btn btn-outline-custom" for="d3">> 1 Bulan</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Bangsa</label>
+                        <select class="form-select" name="race" required>
+                            <option>Melayu</option>
+                            <option>Cina</option>
+                            <option>India</option>
+                            <option>Lain-lain</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Umur</label>
+                        <select class="form-select" name="age" required>
+                            <option>Bawah 18 tahun</option>
+                            <option>18 - 60 tahun</option>
+                            <option>60 tahun ke atas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label d-block">Jantina</label>
+                        <input type="radio" class="btn-check" name="gender" id="g1" value="Lelaki" required>
+                        <label class="btn btn-outline-custom" for="g1"><i class="fas fa-mars"></i> Lelaki</label>
+
+                        <input type="radio" class="btn-check" name="gender" id="g2" value="Perempuan">
+                        <label class="btn btn-outline-custom" for="g2"><i class="fas fa-venus"></i> Perempuan</label>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Jenis Diet</label>
+                        <select class="form-select" name="diet" required>
+                            <option>Regular</option>
+                            <option>Teraputik</option>
+                            <option>Vegetarian</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-2">
+                    <label class="form-label">Language of Questionnaire</label>
+                    <select class="form-select" name="language" required>
+                        <option>Bahasa Malaysia</option>
+                        <option>English</option>
+                        <option>Mandarin</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="main-card">
+                <h5 class="section-title"><i class="fas fa-star"></i> Kepuasan Pelanggan</h5>
+                <p class="text-muted small mb-4">Sila nilaikan perkhidmatan makanan kami.</p>
+
+                <div class="mb-5 text-center p-4 bg-light rounded-3 border-dashed">
+                    <label class="form-label d-block mb-2 fw-bold" style="font-size: 1.1rem;">Adakah anda berpuas hati dengan kualiti makanan?</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="foodQuality" value="5" /><label for="star5" title="Sangat Baik">★</label>
+                        <input type="radio" id="star4" name="foodQuality" value="4" /><label for="star4" title="Baik">★</label>
+                        <input type="radio" id="star3" name="foodQuality" value="3" /><label for="star3" title="Sederhana">★</label>
+                        <input type="radio" id="star2" name="foodQuality" value="2" /><label for="star2" title="Lemah">★</label>
+                        <input type="radio" id="star1" name="foodQuality" value="1" /><label for="star1" title="Sangat Lemah">★</label>
+                    </div>
+                    <div class="small text-muted mt-2">(Pilih Bintang)</div>
+                </div>
+
+                <div class="vstack gap-4">
+                    
+                    <div>
+                        <label class="form-label">Adakah makanan dihidangkan pada masa yang tepat?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="timeliness" id="time1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="time1">Ya</label>
+                            
+                            <input type="radio" class="btn-check" name="timeliness" id="time2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="time2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Adakah makanan dihidangkan sama dengan pesanan?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="accuracy" id="acc1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="acc1">Ya</label>
+                            
+                            <input type="radio" class="btn-check" name="accuracy" id="acc2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="acc2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Adakah pelbagai pilihan makanan disediakan?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="variety" id="var1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="var1">Ya</label>
+                            
+                            <input type="radio" class="btn-check" name="variety" id="var2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="var2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Adakah peralatan menghidang makanan bersih?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="cleanliness" id="clean1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="clean1">Ya</label>
+                            
+                            <input type="radio" class="btn-check" name="cleanliness" id="clean2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="clean2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Adakah staf penghidang sentiasa kemas & sopan?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="staff" id="staff1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="staff1">Ya</label>
+                            
+                            <input type="radio" class="btn-check" name="staff" id="staff2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="staff2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded border border-info">
+                        <label class="form-label text-dark fw-bold">Adakah anda berpuas hati dengan keseluruhan perkhidmatan?</label>
+                        <div>
+                            <input type="radio" class="btn-check" name="overall" id="over1" value="Ya" required>
+                            <label class="btn btn-outline-success px-4" for="over1">Ya, Berpuas Hati</label>
+                            
+                            <input type="radio" class="btn-check" name="overall" id="over2" value="Tidak">
+                            <label class="btn btn-outline-danger px-4" for="over2">Tidak</label>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="form-label">Komen dan cadangan:</label>
+                        <textarea class="form-control" name="comments" rows="3" placeholder="Tulis pandangan anda di sini..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mb-4">
+                <button type="submit" class="btn btn-submit btn-lg text-white" id="submitBtn">
+                    <i class="fas fa-paper-plane me-2"></i> Hantar Borang
+                </button>
+            </div>
+            
+            <div id="message" class="alert text-center" style="display:none; border-radius: 15px;"></div>
+
+        </form>
         
-        <h5 class="section-header">Maklumat Pesakit</h5>
-
-        <div class="mb-3">
-          <label class="form-label">Nama Penemu Ramah</label>
-          <select class="form-select" name="interviewerName" required>
-            <option value="" disabled selected>Sila Pilih...</option>
-            <option>Rafiah binti Sahir (Sajian)</option>
-            <option>Nur Syazwani bunti Maznor Arash (Sajian)</option>
-            <option>Jamaliah Binti Omar (UBME)</option>
-            <option>Asmah @ Asnah Binti Ayub (UBME)</option>
-            <option>Salnizah Binti Ahmad (UBME)</option>
-            <option>Siti Aishah Binti Kassim (UBME)</option>
-            <option>Suna liza Binti Ahmad (UBME)</option>
-            <option>Suzana Binti Ramli (UBME)</option>
-            <option>Maslinawati Binti Ismal (Unit Sajian)</option>
-            <option>Rozizi Binti Abd Rahim (UBME)</option>
-            <option>Others</option>
-          </select>
+        <div class="text-center text-muted small mt-4">
+            &copy; 2025 Jabatan Dietetik PPUM
         </div>
+    </div>
 
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Nombor Pendaftaran (RN)</label>
-            <input type="text" class="form-control" name="rnNumber" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Tarikh</label>
-            <input type="date" class="form-control" name="date">
-          </div>
-        </div>
+    <script>
+        // ------------------------------------------------------------------
+        // IMPORTANT: PASTE YOUR GOOGLE WEB APP URL BELOW inside the quotes ' '
+        // ------------------------------------------------------------------
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwltwAhBC8wu1JBzYJ60vLJkj3MIVqZKCbvbsEtjUEDCz0WOOQ86RoTbqENH6iuqpqQAw/exec'; 
+        // ------------------------------------------------------------------
 
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Wad</label>
-            <input type="text" class="form-control" name="ward" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Katil</label>
-            <input type="text" class="form-control" name="bed" required>
-          </div>
-        </div>
+        function handleFormSubmit(formObject) {
+            event.preventDefault(); // Stop page refresh
+            
+            var btn = document.getElementById("submitBtn");
+            var msg = document.getElementById("message");
+            var form = document.getElementById("surveyForm");
+            var originalText = btn.innerHTML;
 
-        <div class="mb-3">
-          <label class="form-label">Jangka masa tinggal di wad</label>
-          <select class="form-select" name="duration" required>
-             <option value="" disabled selected>Sila Pilih...</option>
-             <option>Kurang daripada 9 hari</option>
-             <option>9 hari - 1 bulan</option>
-             <option>Lebih daripada 1 bulan</option>
-          </select>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Bangsa</label>
-            <select class="form-select" name="race" required>
-              <option>Melayu</option>
-              <option>Cina</option>
-              <option>India</option>
-              <option>Lain-lain</option>
-            </select>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label class="form-label">Umur</label>
-            <select class="form-select" name="age" required>
-              <option>Bawah 18 tahun</option>
-              <option>18 - 60 tahun</option>
-              <option>60 tahun ke atas</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Jantina</label>
-          <div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender" value="Lelaki" required>
-              <label class="form-check-label">Lelaki</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="gender" value="Perempuan">
-              <label class="form-check-label">Perempuan</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Jenis Diet</label>
-          <select class="form-select" name="diet" required>
-             <option>Regular</option>
-             <option>Teraputik</option>
-             <option>Vegetarian</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Language of Questionnaire</label>
-          <select class="form-select" name="language" required>
-             <option>Bahasa Malaysia</option>
-             <option>English</option>
-             <option>Mandarin</option>
-          </select>
-        </div>
-
-        <hr class="my-5">
-
-        <h5 class="section-header">Kepuasan Pelanggan</h5>
-        <p class="small text-muted">Sila tandakan (√) atau pilih jawapan yang sesuai.</p>
-
-        <div class="mb-4 text-center">
-          <label class="form-label d-block">Adakah anda berpuas hati dengan kualiti makanan yang dihidangkan?</label>
-          <div class="star-rating">
-            <input type="radio" id="star5" name="foodQuality" value="5" /><label for="star5" title="Sangat Baik">★</label>
-            <input type="radio" id="star4" name="foodQuality" value="4" /><label for="star4" title="Baik">★</label>
-            <input type="radio" id="star3" name="foodQuality" value="3" /><label for="star3" title="Sederhana">★</label>
-            <input type="radio" id="star2" name="foodQuality" value="2" /><label for="star2" title="Lemah">★</label>
-            <input type="radio" id="star1" name="foodQuality" value="1" /><label for="star1" title="Sangat Lemah">★</label>
-          </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah makanan dihidangkan pada masa yang tepat?</label>
-            <div>
-                <input type="radio" class="btn-check" name="timeliness" id="time1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="time1">Ya</label>
-                <input type="radio" class="btn-check" name="timeliness" id="time2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="time2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah makanan dihidangkan sama dengan makanan yang dipesan?</label>
-             <div>
-                <input type="radio" class="btn-check" name="accuracy" id="acc1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="acc1">Ya</label>
-                <input type="radio" class="btn-check" name="accuracy" id="acc2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="acc2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah anda disediakan dengan pelbagai pilihan makanan?</label>
-             <div>
-                <input type="radio" class="btn-check" name="variety" id="var1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="var1">Ya</label>
-                <input type="radio" class="btn-check" name="variety" id="var2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="var2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah peralatan yang digunakan untuk menghidang makanan bersih?</label>
-             <div>
-                <input type="radio" class="btn-check" name="cleanliness" id="clean1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="clean1">Ya</label>
-                <input type="radio" class="btn-check" name="cleanliness" id="clean2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="clean2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah staf penghidang makanan sentiasa kemas dan sopan?</label>
-             <div>
-                <input type="radio" class="btn-check" name="staff" id="staff1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="staff1">Ya</label>
-                <input type="radio" class="btn-check" name="staff" id="staff2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="staff2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3 p-3 bg-light rounded">
-            <label class="form-label">Adakah anda berpuas hati dengan keseluruhan kualiti perkhidmatan makanan?</label>
-             <div>
-                <input type="radio" class="btn-check" name="overall" id="over1" value="Ya" autocomplete="off" required>
-                <label class="btn btn-outline-success btn-sm" for="over1">Ya</label>
-                <input type="radio" class="btn-check" name="overall" id="over2" value="Tidak" autocomplete="off">
-                <label class="btn btn-outline-danger btn-sm" for="over2">Tidak</label>
-            </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Komen dan cadangan:</label>
-          <textarea class="form-control" name="comments" rows="3"></textarea>
-        </div>
+            // Loading State
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sedang Menghantar...';
+            
+            // Send data to Google Sheet
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                console.log('Success!', response);
+                
+                // Success UI Updates
+                btn.innerHTML = '<i class="fas fa-check-circle me-2"></i> Berjaya!';
+                btn.style.backgroundColor = "#28a745"; // Green success
+                
+                msg.style.display = "block";
+                msg.className = "alert alert-success shadow-sm";
+                msg.innerHTML = "<strong>Terima kasih!</strong> Maklum balas anda telah selamat direkodkan.";
+                
+                form.reset();
+                
+                // Reset button after 4 seconds
+                setTimeout(function(){
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> Hantar Borang';
+                    btn.style.backgroundColor = ""; // Revert to CSS default
+                    msg.style.display = "none";
+                }, 4000);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                
+                // Error UI Updates
+                btn.disabled = false;
+                btn.innerHTML = "Cuba Lagi";
+                
+                msg.style.display = "block";
+                msg.className = "alert alert-danger shadow-sm";
+                msg.innerHTML = "<strong>Ralat sambungan.</strong> Sila semak internet anda dan cuba lagi.";
+            });
+        }
+    </script>
+</body>
+</html>
